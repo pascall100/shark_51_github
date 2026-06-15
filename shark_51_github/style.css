@@ -1,0 +1,693 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #00101f;
+    color: white;
+}
+
+canvas {
+    display: block;
+    cursor: crosshair;
+}
+
+/* ==================== MODERNE SETUP CARD ==================== */
+#setup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 92%;
+    max-width: 480px;
+    background: rgba(5, 25, 45, 0.88);
+    border-radius: 24px;
+    border: 1px solid rgba(0, 180, 255, 0.3);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65),
+                0 0 0 1px rgba(0, 200, 255, 0.15) inset;
+    overflow: hidden;
+    z-index: 100;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#setup-card {
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card-header h1 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+    background: linear-gradient(90deg, #00ccff, #44ddff);
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px rgba(0, 204, 255, 0.5);
+}
+
+.subtitle {
+    color: #88ccff;
+    font-size: 15.5px;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.card-section {
+    background: rgba(10, 35, 65, 0.65);
+    padding: 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 180, 255, 0.25);
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.card-section:hover {
+    background: rgba(15, 45, 80, 0.75);
+    border-color: rgba(0, 200, 255, 0.4);
+}
+
+.card-section h3 {
+    margin: 0 0 14px 0;
+    color: #00ddff;
+    font-size: 16.5px;
+    font-weight: 600;
+}
+
+label {
+    display: block;
+    margin: 12px 0 6px;
+    font-size: 14.5px;
+    color: #a0d0ff;
+    font-weight: 500;
+}
+
+/* ==================== EINHEITLICHE FORMULARFELDER ==================== */
+input, select {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(0, 180, 255, 0.4);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    transition: 0.2s;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    height: 48px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #00ccff;
+    box-shadow: 0 0 0 3px rgba(0, 204, 255, 0.15);
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ==================== BUTTON STYLES ==================== */
+button {
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #00ccff, #0099cc);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 204, 255, 0.4);
+}
+
+.start-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #00ccff, #0099ff);
+    border: none;
+    border-radius: 14px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 8px 25px rgba(0, 170, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 170, 255, 0.5);
+}
+
+/* ==================== links OBEN TOGGLE-BUTTONS ==================== */
+/* ==================== TOP BUTTONS (LINKS & RECHTS OBEN) ==================== */
+#toggle-hud-btn,
+#toggle-formation-btn,
+#toggle-eventlog-btn {
+    position: absolute;
+    z-index: 120;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(0, 100, 150, 0.95);
+    border: 1px solid #00aaff;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+#toggle-hud-btn {
+    right: 20px;
+    top: 20px;
+}
+
+#toggle-formation-btn {
+    right: 20px;
+    top: 50px;
+}
+
+#toggle-eventlog-btn {
+    left: 20px;
+    top: 20px;
+    background: rgba(0, 150, 100, 0.85) !important;
+    border-color: #00ffaa;
+}
+
+#toggle-eventlog-btn:hover {
+    background: rgba(0, 180, 120, 0.95) !important;
+}
+/* ==================== FORMATION BUTTONS (INKL. EVENT LOG BUTTON) ==================== */
+#formation-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+#formation-buttons button {
+    width: auto;
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    background: rgba(0, 120, 200, 0.7);
+    border: 1px solid #00aaff;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+#formation-buttons button:hover {
+    background: rgba(0, 150, 255, 0.9);
+    border-color: #00ccff;
+    transform: translateY(-2px);
+}
+
+/* Spezieller Stil für Haikäfig */
+#haikaefig-btn {
+    background: rgba(200, 60, 60, 0.85) !important;
+    border-color: #ff6666;
+}
+
+#haikaefig-btn:hover {
+    background: rgba(220, 80, 80, 0.95) !important;
+}
+
+/* Spezieller Stil für Event Log Button */
+#formation-buttons button:last-child {
+    background: rgba(0, 150, 100, 0.85) !important;
+    border-color: #00ffaa;
+}
+
+#formation-buttons button:last-child:hover {
+    background: rgba(0, 180, 120, 0.95) !important;
+}
+
+/* Aktiver Zustand */
+#haikaefig-btn.active,
+#surfer-btn.active {
+    background: rgba(0, 180, 100, 0.9) !important;
+    border-color: #00ffaa;
+    color: #ffff88;
+}
+
+/* ==================== RESTLICHE ELEMENTE ==================== */
+#hud {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 360px;
+    padding: 16px;
+    background: rgba(0, 20, 40, 0.85);
+    border-radius: 14px;
+    border: 1px solid rgba(0, 180, 255, 0.3);
+    backdrop-filter: blur(12px);
+    display: block;
+    z-index: 90;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.warning {
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 15.5px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.warning.critical {
+    animation: criticalPulse 0.8s ease-in-out 4;
+}
+
+@keyframes criticalPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+.controls {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-top: 12px;
+}
+
+#shark-types-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.shark-card {
+    background: rgba(0, 30, 60, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 180, 255, 0.3);
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.shark-card:hover {
+    background: rgba(0, 40, 80, 0.8);
+    transform: translateY(-2px);
+}
+
+.shark-card.selected {
+    background: rgba(0, 60, 120, 0.9);
+    border-color: #00ccff;
+}
+
+.shark-card input[type="checkbox"] {
+    display: none;
+}
+
+.shark-card-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#shark-counts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.count-card {
+    background: rgba(0, 30, 60, 0.5);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 180, 255, 0.2);
+}
+
+.count-card label {
+    display: block;
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+.count-card input {
+    width: 50px;
+    padding: 5px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(0, 180, 255, 0.4);
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+}
+
+#shark-info-preview {
+    background: rgba(0, 30, 60, 0.7);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #00ccff;
+    display: none;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 13px;
+}
+
+#shark-info-preview h3 {
+    margin: 0 0 5px 0;
+    color: #00ccff;
+    font-size: 15px;
+}
+
+#shark-info-preview p {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+}
+
+.danger-1 { border-left: 3px solid #06d6a0; }
+.danger-2 { border-left: 3px solid #ffd166; }
+.danger-3 { border-left: 3px solid #ff6b6b; }
+
+#formation-hint {
+    font-size: 12px;
+    color: #00ccff;
+    margin-top: 5px;
+    text-align: center;
+    font-style: italic;
+}
+
+#docModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(5, 25, 45, 0.98);
+    padding: 28px;
+    border-radius: 16px;
+    border: 2px solid #00b894;
+    width: 540px;
+    max-height: 88vh;
+    overflow-y: auto;
+    z-index: 200;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.85);
+    display: none;
+}
+
+.modal-section {
+    background: rgba(10, 35, 65, 0.75);
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0, 180, 255, 0.3);
+}
+
+.modal-label {
+    display: block;
+    margin: 12px 0 6px;
+    color: #00d8b0;
+    font-weight: 600;
+}
+
+.modal-input, .modal-textarea {
+    width: 100%;
+    padding: 11px 13px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid #00b894;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+}
+/* ==================== MODAL GRUNDSTRUKTUR ==================== */
+#docModal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(5, 25, 45, 0.98);
+    padding: 28px;
+    border-radius: 16px;
+    border: 2px solid #00b894;
+    width: 540px;
+    max-height: 88vh;
+    overflow-y: auto;
+    z-index: 200;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.85);
+    display: none;
+}
+
+.modal-section {
+    background: rgba(10, 35, 65, 0.75);
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(0, 180, 255, 0.3);
+}
+
+.modal-label {
+    display: block;
+    margin: 12px 0 6px;
+    color: #00d8b0;
+    font-weight: 600;
+}
+
+.modal-input, .modal-textarea {
+    width: 100%;
+    padding: 11px 13px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid #00b894;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.modal-textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* ==================== CONFIDENCE DROPDOWN GRUNDLAGEN ==================== */
+#docModal select,
+#docModal .modal-confidence {
+    width: 100%;
+    padding: 10px 12px;
+    background: #0a2a4a;
+    color: white;
+    border: 1px solid #00b894;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#docModal select option,
+#docModal .modal-confidence option {
+    padding: 10px;
+}
+
+/* ==================== CONFIDENCE FARBEN (4-1-0) ==================== */
+/* 4 - Sehr sicher (Grün) */
+#docModal select option[value="4"],
+#docModal .modal-confidence option[value="4"] {
+    background: #1a6e3a;
+    color: #ccffcc;
+    border-left: 4px solid #2ecc71;
+}
+
+/* 3 - Eher sicher (Gelb) */
+#docModal select option[value="3"],
+#docModal .modal-confidence option[value="3"] {
+    background: #6e6e1a;
+    color: #ffffcc;
+    border-left: 4px solid #f1c40f;
+}
+
+/* 2 - Unsicher (Orange) */
+#docModal select option[value="2"],
+#docModal .modal-confidence option[value="2"] {
+    background: #6e4a1a;
+    color: #ffccaa;
+    border-left: 4px solid #e67e22;
+}
+
+/* 1 - Sehr unsicher (Rot) */
+#docModal select option[value="1"],
+#docModal .modal-confidence option[value="1"] {
+    background: #6e1a1a;
+    color: #ffaaaa;
+    border-left: 4px solid #e74c3c;
+}
+
+/* 0 - Keine Angabe (Grau) */
+#docModal select option[value="0"],
+#docModal .modal-confidence option[value="0"],
+#docModal select option[value=""],
+#docModal .modal-confidence option[value=""] {
+    background: #3a3a4a;
+    color: #bbbbbb;
+    border-left: 4px solid #7f8c8d;
+}
+
+/* ==================== HOVER-EFFEKTE ==================== */
+#docModal select option:hover,
+#docModal .modal-confidence option:hover {
+    filter: brightness(1.2);
+}
+
+/* ==================== LEGENDE FÜR DIE FARBEN (OPTIONAL) ==================== */
+.confidence-legend {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+}
+
+.confidence-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.confidence-legend .color-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+}
+ /* Zusätzliche Styles für bessere Struktur */
+        .hud-section {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(0,0,0,0.35);
+            border-radius: 8px;
+            border-left: 3px solid #00aaff;
+        }
+        .hud-section-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #88ccff;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+        .key-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: bold;
+            flex-wrap: wrap;
+        }
+        .key {
+            background: #1a2a4a;
+            padding: 3px 8px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .divider {
+            color: #88ccff;
+            margin: 0 5px;
+        }
+        .button-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .button-group button {
+            flex: 1;
+            min-width: 80px;
+        }
+        /* Neue Styles für die Wertedarstellung */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .value-card {
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .value-label {
+            font-size: 10px;
+            color: #88ccff;
+            margin-bottom: 4px;
+        }
+        .value-number {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .value-unit {
+            font-size: 10px;
+        }
+        .comparison-row {
+            background: rgba(0,0,0,0.25);
+            padding: 6px;
+            border-radius: 5px;
+            margin-bottom: 6px;
+        }
+        .comparison-title {
+            color: #ffaa44;
+            font-size: 11px;
+            margin-bottom: 4px;
+        }
+        .comparison-values {
+            display: flex;
+            justify-content: space-around;
+            gap: 8px;
+        }
+        .comparison-item {
+            text-align: center;
+            flex: 1;
+        }
+        .comparison-item-label {
+            font-size: 10px;
+            color: #aaa;
+        }
+        .comparison-item-value {
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .simulation-hint {
+            background: rgba(0,0,0,0.6);
+            text-align: center;
+            padding: 6px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: #ffaa44;
+            font-size: 11px;
+        }
+        /* NEU: HTML-Bericht Button etwas hervorheben */
+        .btn-html-report {
+            background: #00aaff !important;
+            font-weight: bold;
+            border: 1px solid #88ccff !important;
+        }

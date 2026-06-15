@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unterwasserwelt • Taucher & Haie Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="game"></canvas>
+
+    <!-- TOP BUTTONS (LINKS OBEN) -->
+    <button id="toggle-eventlog-btn" onclick="toggleEventLog()" style="left: 20px;">📜 Event Log</button>
+    <button id="toggle-hud-btn">HUD On / Off</button>
+    <button id="toggle-formation-btn" onclick="toggleFormationMode()">Formation verschieben: EIN</button>
+
+    <!-- SETUP -->
+    <div id="setup">
+        <div id="setup-card">
+            <div class="card-header">
+                <h1>🌊 Unterwasserwelt Simulation</h1>
+                <p class="subtitle">Taucher-Hai-Simulationen</p>
+            </div>
+
+            <div class="card-section">
+                <h3>🧑‍🤿 Taucher Konfiguration</h3>
+                <label>Anzahl Taucher</label>
+                <input id="diversCount" type="number" value="6" min="1" max="25">
+
+                <label>Kameramann hinzufügen</label>
+                <select id="hasCameraman">
+                    <option value="false">Nein</option>
+                    <option value="true" selected>Ja</option>
+                </select>
+            </div>
+
+            <div class="card-section">
+                <h3>🦈 Hai-Arten auswählen (max. 5 pro Art)</h3>
+                <div id="shark-types-container"></div>
+            </div>
+
+            <div id="shark-info-preview">
+                <h3 id="shark-info-title"></h3>
+                <p id="shark-info-description"></p>
+                <p><strong>Gefahrenstufe:</strong> <span id="shark-danger-icons"></span></p>
+                <p><strong>Größe:</strong> <span id="shark-size-range"></span></p>
+                <p><strong>Vorkommen:</strong> <span id="shark-habitat"></span></p>
+            </div>
+
+            <div class="card-section">
+                <h3>📊 Anzahl pro Hai-Art</h3>
+                <div id="shark-counts-container"></div>
+            </div>
+
+            <div class="card-section">
+                <h3>📏 Start-Tauchtiefe</h3>
+                <label>Tiefe (Pixel)</label>
+                <input id="depth" type="number" value="320" min="100" max="700">
+            </div>
+
+            <div id="start-button-container">
+                <button onclick="start()" class="start-btn">🚀 Simulation starten</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HUD (RECHTE SEITE) - NEUE STRUKTUR -->
+    <div id="hud">
+        
+        <!-- SIMULATION HINWEIS - GANZ OBEN -->
+        <div class="simulation-hint">
+            🧪 SIMULATION • Alle angezeigten Werte sind Berechnungsbeispiele • Nicht für reale Tauchgänge geeignet
+        </div>
+
+        <!-- 1. EINSTELLUNGEN -->
+        <div class="hud-section">
+            <div class="hud-section-title">📋 1. EINSTELLUNGEN</div>
+            <div class="button-group">
+                <div id="color-picker" style="flex: 1; background: none; padding: 0;">
+                    <label style="font-size: 12px;">🎨 Licht & Atmosphäre</label>
+                    <input type="color" id="bgColor1" value="#003366" style="width: 100%;">
+                </div>
+            </div>
+            
+                        <!-- YouTube Links mit kopierbaren Links -->
+            <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
+                
+                <!-- Erster Link: Installation -->
+                <div style="margin-bottom: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+                        <span style="font-size: 11px; color: #88ccff;">📀 Installation:</span>
+                        <a href="https://www.youtube.com/watch?v=WGNJcBOaqzo" target="_blank" style="color: #ff6666; text-decoration: none; font-size: 11px;">Video öffnen</a>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 10px; color: #aaa;">📋 Link:</span>
+                        <input type="text" value="https://www.youtube.com/watch?v=WGNJcBOaqzo" readonly style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid #444; border-radius: 4px; padding: 4px 6px; font-size: 10px; color: #88ccff;">
+                        <button onclick="navigator.clipboard.writeText('https://www.youtube.com/watch?v=WGNJcBOaqzo')" style="width: auto; padding: 4px 8px; margin: 0; font-size: 10px; background: #006699; cursor: pointer;">📋 Kopieren</button>
+                    </div>
+                </div>
+                
+                <!-- Zweiter Link: Einstellungen -->
+                <div>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
+                        <span style="font-size: 11px; color: #88ccff;">⚙️ Einstellungen:</span>
+                        <a href="https://www.youtube.com/watch?v=ZqTUsyXB1hQ" target="_blank" style="color: #ff6666; text-decoration: none; font-size: 11px;">Video öffnen</a>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 10px; color: #aaa;">📋 Link:</span>
+                        <input type="text" value="https://www.youtube.com/watch?v=ZqTUsyXB1hQ" readonly style="flex: 1; background: rgba(0,0,0,0.4); border: 1px solid #444; border-radius: 4px; padding: 4px 6px; font-size: 10px; color: #88ccff;">
+                        <button onclick="navigator.clipboard.writeText('https://www.youtube.com/watch?v=ZqTUsyXB1hQ')" style="width: auto; padding: 4px 8px; margin: 0; font-size: 10px; background: #006699; cursor: pointer;">📋 Kopieren</button>
+                    </div>
+                </div>
+                
+            </div>
+        <!-- 2. TASTATUR (immer sichtbar) -->
+        <div class="hud-section" style="border-left-color: #ffaa44;">
+            <div class="hud-section-title">🎮 2. TASTATUR</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div>
+                    <div style="color: #ffaa44; font-size: 11px; margin-bottom: 4px;">🤿 Taucher</div>
+                    <div class="key-row">
+                        <span class="key">W ▲</span>
+                        <span class="key">S ▼</span>
+                        <span class="key">A ◀</span>
+                        <span class="key">D ▶</span>
+                    </div>
+                </div>
+                <div>
+                    <div style="color: #ff6666; font-size: 11px; margin-bottom: 4px;">🦈 Hai (ausgewählt)</div>
+                    <div class="key-row">
+                        <span class="key">I ▲</span>
+                        <span class="key">K ▼</span>
+                        <span class="key">J ◀</span>
+                        <span class="key">L ▶</span>
+                    </div>
+                </div>
+                <div>
+                    <div style="color: #88ff88; font-size: 11px; margin-bottom: 4px;">⛵ Schiff</div>
+                    <div class="key-row">
+                        <span class="key">T ▲</span>
+                        <span class="key">G ▼</span>
+                        <span class="key">F ◀</span>
+                        <span class="key">H ▶</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. FORMATIONEN -->
+        <div class="hud-section">
+            <div class="hud-section-title">🎯 3. FORMATIONEN</div>
+            <div class="button-group">
+                <button onclick="setFormation('halbkreis')">🔵 Halbkreis</button>
+                <button onclick="setFormation('stern')">⭐ Stern</button>
+                <button onclick="setFormation('linie')">➖ Linie</button>
+            </div>
+        </div>
+
+        <!-- 4. HAIKÄFIG & KÖDER -->
+        <div class="hud-section">
+            <div class="hud-section-title">🦈 4. HAIKÄFIG & KÖDER</div>
+            <div class="button-group" style="margin-bottom: 10px;">
+                <button id="haikaefig-btn">🦈 Haikäfig</button>
+                <button id="surfer-btn" onclick="toggleSurfer()">🏄 Event-Log</button>
+            </div>
+            
+            <!-- Köder / Chum System kompakt -->
+            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <div style="font-size: 11px; color: #88aaff; margin-bottom: 6px;">🐟 Köder / Chum</div>
+                <div style="display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+                    <select id="chum-type" style="flex: 2; padding: 5px; font-size: 11px; background: rgba(0,0,0,0.5); color: white; border: 1px solid #88aaff; border-radius: 4px;">
+                        <option value="fish">🐟 Fischstücke</option>
+                        <option value="oil">🛢️ Fischöl</option>
+                        <option value="whole">🐟 Ganzer Fisch</option>
+                    </select>
+                    <input type="number" id="chum-quantity" placeholder="Menge" value="1" min="1" max="20" style="width: 60px; padding: 5px; font-size: 11px;">
+                </div>
+                <div style="display: flex; gap: 6px;">
+                    <button id="add-chum-at-mouse" style="flex: 1; padding: 5px; font-size: 11px;">🖱️ An Maus</button>
+                    <button id="add-chum-at-cage" style="flex: 1; padding: 5px; font-size: 11px;">🔲 Am Käfig</button>
+                    <button id="clear-all-chum" style="flex: 1; padding: 5px; font-size: 11px; background: #883333;">🗑️ Alle</button>
+                </div>
+                <div id="chum-list" style="font-size: 10px; max-height: 80px; overflow-y: auto; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 4px; margin-top: 6px;">
+                    <span style="opacity: 0.5;">Keine Köder platziert</span>
+                </div>
+                <div style="font-size: 9px; margin-top: 4px; color: #88aaff;">💡 Verschieben | Rechtsklick löscht</div>
+            </div>
+        </div>
+
+        <!-- 5. DATEN DES AUSGEWÄHLTEN OBJEKTS (NEUTRAL) -->
+        <div class="hud-section" style="border-left-color: #ffaa44;">
+            <div class="hud-section-title">📊 5. AUSGEWÄHLTES OBJEKT</div>
+            
+            <!-- Eigenen Tiefe -->
+            <div id="selected-depth-container" class="value-card" style="margin-bottom: 10px;">
+                <div class="value-label">📏 TIEFE</div>
+                <div class="value-number" id="selected-depth">--<span class="value-unit"> m</span></div>
+            </div>
+            
+            <!-- Vergleich zu anderen Objekten -->
+            <div class="comparison-title">📍 VERGLEICH ZU ANDEREN OBJEKTEN / Simulation</div>
+            <div id="comparison-list" style="max-height: 200px; overflow-y: auto;">
+                <div style="color: #aaa; text-align: center; padding: 10px;">Kein Objekt ausgewählt</div>
+            </div>
+        </div>
+
+        <!-- 6. UMWELT - Strömung -->
+        <div class="hud-section">
+            <div class="hud-section-title">🌊 6. UMWELT</div>
+            <div>
+                <label style="font-size: 12px;">📐 Richtung: <span id="test-dir-value">0°</span></label>
+                <input type="range" id="test-dir-slider" min="0" max="360" value="0" step="1" style="width: 100%;">
+            </div>
+            <div style="margin-top: 6px;">
+                <label style="font-size: 12px;">💨 Geschwindigkeit: <span id="test-spd-value">0.0</span> Knoten</label>
+                <input type="range" id="test-spd-slider" min="0" max="10" value="0" step="0.5" style="width: 100%;">
+            </div>
+            <div id="test-output" style="margin-top: 6px; font-size: 11px; color: #88ccff;">→ Bewege die Slider</div>
+        </div>
+
+        <!-- 7. DOKUMENTATION & EXPORT -->
+        <div class="hud-section" style="border-left-color: #88ff88;">
+            <div class="hud-section-title">💾 7. DOKUMENTATION</div>
+            <div class="button-group">
+                <button onclick="openDocumentation()">📋 Hai-Bericht</button>
+                <button onclick="openHtmlReport()" class="btn-html-report">📄 HTML-Bericht</button>
+                <button onclick="exportToJSON()">📤 JSON Export</button>
+                <button onclick="importFromJSON()">📥 JSON Import</button>
+            </div>
+        </div>
+
+        <!-- Hinweis: Simulierte Entfernungen -->
+        <div style="font-size: 9px; color: #aaa; margin-top: 12px; text-align: center; padding: 5px; border-top: 1px solid rgba(255,255,255,0.1);">
+            ⚠️ Simulierte Entfernungen - nicht maßstabsgetreu
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
