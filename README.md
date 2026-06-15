@@ -4,6 +4,17 @@ Underwater Scenario Visualizer
 
 Freie Visualisierungs- und Dokumentationssoftware für Hai- und Tauchszenarien Underwater Scenario Visualizer ist eine freie Open-Source-Software zur Visualisierung, Rekonstruktion und Dokumentation von Hai- und Tauchszenarien in einer zweidimensionalen Umgebung. Unterwassersituationen sind häufig komplex und entwickeln sich innerhalb weniger Sekunden. Besonders bei Begegnungen mit Haien entstehen dynamische Szenen, in denen sich Taucher, Tiere, Umweltbedingungen und räumliche Beziehungen ständig verändern. Videoaufnahmen zeigen oft nur einzelne Ausschnitte eines Ereignisses, während Erinnerungen und Wahrnehmungen verschiedener Beteiligter voneinander abweichen können. Diese Software ermöglicht es, solche Situationen strukturiert und nachvollziehbar darzustellen. Taucher, Haie, Boote und weitere Elemente können frei im Raum platziert und bewegt werden. Formationen, Positionen, Bewegungsabläufe sowie Umweltbedingungen wie Sichtweite oder Wassertrübung lassen sich flexibel anpassen. Dadurch können reale oder hypothetische Szenarien visuell rekonstruiert und dokumentiert werden. Ziel ist es, komplexe Unterwassersituationen übersichtlich darzustellen und eine gemeinsame Grundlage für Analyse, Dokumentation und Diskussion zu schaffen. Szenarien können gespeichert, verändert und als Bilder oder Projektdateien weitergegeben werden. Es gibt 2 youtube-Videos dazu. 
 
+youtube-Anleitung 1
+youtube-Anleitung 2
+
+
+Einführung 
+https://www.youtube.com/watch?v=ZqTUsyXB1hQ
+
+
+Installation
+https://www.youtube.com/watch?v=WGNJcBOaqzo
+
 Was diese Software nicht ist
 
 Diese Software ist ausdrücklich: kein Trainingssystem kein Sicherheits- oder Risikobewertungssystem kein Prognosesystem keine wissenschaftliche Simulation von Hai- oder Tierverhalten kein Ersatz für professionelle Tauchausbildung oder Sicherheitsrichtlinien Die Software dient ausschließlich der visuellen Rekonstruktion, Dokumentation und Diskussion von realen oder hypothetischen Unterwassersituationen.
